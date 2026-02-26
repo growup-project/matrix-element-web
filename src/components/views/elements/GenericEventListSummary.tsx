@@ -59,6 +59,10 @@ const GenericEventListSummary: React.FC<IProps> = ({
 
     const eventIds = events.map((e) => e.getId()).join(",");
 
+    if(localStorage.getItem('admin') !== 'true'){
+        return null
+    }
+
     // If we are only given few events then just pass them through
     if (events.length < threshold) {
         return (

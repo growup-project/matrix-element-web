@@ -19,4 +19,11 @@ import { type ComponentVisibilityCustomisations as IComponentVisibilityCustomisa
 export const ComponentVisibilityCustomisations: IComponentVisibilityCustomisations = {
     // while we don't specify the functions here, their defaults are described
     // in their pseudo-implementations above.
+    shouldShowComponent: (component) => (
+        component === 'UIComponent.spaceCreation'
+        || component === 'UIComponent.roomCreation'
+        || component === 'UIComponent.sendInvites'
+            ? localStorage.getItem('admin') === 'true'
+            : true
+    )
 };
