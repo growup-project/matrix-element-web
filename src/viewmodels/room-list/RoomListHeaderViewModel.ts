@@ -30,6 +30,8 @@ import SettingsStore from "../../settings/SettingsStore";
 import RoomListStoreV3 from "../../stores/room-list-v3/RoomListStoreV3";
 import { SortingAlgorithm } from "../../stores/room-list-v3/skip-list/sorters";
 import { SettingLevel } from "../../settings/SettingLevel";
+import { clearRoomNotification } from "../../utils/notifications";
+import { doesRoomHaveUnreadMessages } from "../../Unread";
 import { createRoom, hasCreateRoomRights } from "./utils";
 
 export interface Props {
@@ -198,6 +200,22 @@ export class RoomListHeaderViewModel
         const isMessagePreviewEnabled = !SettingsStore.getValue("RoomList.showMessagePreview");
         SettingsStore.setValue("RoomList.showMessagePreview", null, SettingLevel.DEVICE, isMessagePreviewEnabled);
         this.snapshot.merge({ isMessagePreviewEnabled });
+    };
+
+    public markAllAsRead = async (): Promise<void> => {
+        const client = this.props.matrixClient;
+        const activeSpace = this.props.spaceStore.activeSpace;
+        const spaceFilteredRoomIds = this.props.spaceStore.getSpaceFilteredRoomIds(activeSpace);
+
+        const promises: Promise<any>[] = [];
+        for (const roomId of spaceFilteredRoomIds) {
+            const room = client.getRoom(roomId);
+            if (room && doesRoomHaveUnreadMessages(room, true)) {
+                promises.push(clearRoomNotification(room, client));
+            }
+        }
+
+        await Promise.all(promises);
     };
 }
 

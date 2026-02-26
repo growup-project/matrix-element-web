@@ -98,6 +98,10 @@ export interface RoomListHeaderViewActions {
      * Toggle message preview display in the room list.
      */
     toggleMessagePreview: () => void;
+    /**
+     * Mark all rooms in the current space as read.
+     */
+    markAllAsRead: () => void;
 }
 
 /**

@@ -101,6 +101,7 @@
             "unread": "Unreads"
         },
         "list_title": "Room list",
+        "mark_all_read": "Mark all as read",
         "more_options": {
             "copy_link": "Copy room link",
             "favourited": "Favourited",

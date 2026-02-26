@@ -5,9 +5,10 @@
  * Please see LICENSE files in the repository root for full details.
  */
 
-import { CheckboxMenuItem, IconButton, Menu, MenuTitle, RadioMenuItem } from "@vector-im/compound-web";
+import { CheckboxMenuItem, IconButton, Menu, MenuItem, MenuTitle, RadioMenuItem, Separator } from "@vector-im/compound-web";
 import React, { type JSX, useState } from "react";
 import OverflowHorizontalIcon from "@vector-im/compound-design-tokens/assets/web/icons/overflow-horizontal";
+import MarkAsReadIcon from "@vector-im/compound-design-tokens/assets/web/icons/mark-as-read";
 
 import { type RoomListHeaderViewModel } from "../RoomListHeaderView";
 import { useViewModel } from "../../../viewmodel";
@@ -75,6 +76,13 @@ export function OptionMenuView({ vm }: OptionMenuViewProps): JSX.Element {
                 label={_t("room_list|show_message_previews")}
                 onSelect={vm.toggleMessagePreview}
                 checked={isMessagePreviewEnabled}
+            />
+            <Separator />
+            <MenuItem
+                Icon={MarkAsReadIcon}
+                label={_t("room_list|mark_all_read")}
+                onSelect={vm.markAllAsRead}
+                hideChevron={true}
             />
         </Menu>
     );
